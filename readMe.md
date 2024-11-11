@@ -1,0 +1,1 @@
+# This project is to establish clear guidelines that will regulate access to both the Cucrid auditorium and the studio.
