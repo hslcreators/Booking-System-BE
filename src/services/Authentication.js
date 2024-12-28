@@ -1,5 +1,5 @@
 import AuthRepo from "../repositories/AuthRepo";
-
+import jwt from "jsonwebtoken"
 
 class AuthenticationService extends AuthRepo {
     // service layer
