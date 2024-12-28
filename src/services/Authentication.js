@@ -1,3 +1,4 @@
+require('dotenv').config()
 import AuthRepo from "../repositories/AuthRepo";
 import jwt from "jsonwebtoken"
 
