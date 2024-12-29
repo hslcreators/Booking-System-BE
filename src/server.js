@@ -17,8 +17,8 @@ const connectWithRetry = () => {
         useNewUrlParser: true
     }).then(() => {
         console.log('Connected to database');
-        server.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
+        server.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
     }).catch((err) => {
         retries += 1;

@@ -29,4 +29,12 @@ const userSchema = new Schema({
         type: String,
         trim: true,
     }
+},
+{
+    versionKey: false,
+    timestamps: true
 })
+
+const model = Model("users", userSchema)
+
+export default model;
