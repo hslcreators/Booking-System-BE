@@ -4,6 +4,30 @@ import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 class AuthenticationService extends AuthRepo {
     // service layer
+    async registerUser(data){
+        const user = await this.createUser(data);
+        if(!user || user.err){
+            //fix error handling
+            throw new Error('Error Creating Users')
+        }
+        return true //shoud redirect to login after creating
+    }
+
+    async loginUser(email, password){
+        const user = await this.findUserByEmail(email);
+        if (!user || !this.IsPassword(password, user.password)){
+            throw new Error("Invalid Credentials")
+        }
+        return this.generateToken(user)
+    }
+
+    IsPassword(inputPassword, userPassword){
+        bcrypt.compare(inputPassword, userPassword, function(err, result) {
+            if (err || result == false) return false; //error handle later
+            if (result == true) return true;
+        });
+    }
+
     generateToken(user) {
         return jwt.sign(
             { id: user.id, email: user.email },
