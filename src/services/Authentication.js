@@ -1,5 +1,5 @@
-require('dotenv').config()
-import AuthRepo from "../repositories/AuthRepo";
+import dotenv from 'dotenv';
+import AuthRepo from "../repositories/AuthRepo.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
 class AuthenticationService extends AuthRepo {

@@ -1,4 +1,4 @@
-import AuthenticationService from "../services/Authentication"
+import AuthenticationService from "../services/Authentication.js"
 
 const authService = new AuthenticationService();
 

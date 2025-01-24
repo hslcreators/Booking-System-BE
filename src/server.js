@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 const maxRetries = 5;
 let retries = 0;
 
+console.log(PORT)
 
 const connectWithRetry = () => {
     console.log(`MongoDB connection attempt ${retries + 1}`);

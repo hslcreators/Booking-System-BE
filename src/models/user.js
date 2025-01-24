@@ -1,4 +1,4 @@
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
     firstName: {
@@ -28,13 +28,12 @@ const userSchema = new Schema({
     phoneNumber: {
         type: String,
         trim: true,
+    },
+
+    role: {
+        type: String,
+        default: "BASIC"
     }
-},
-{
-    versionKey: false,
-    timestamps: true
 })
 
-const model = Model("users", userSchema)
-
-export default model;
+export const User = model("User", userSchema)
