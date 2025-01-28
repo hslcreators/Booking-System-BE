@@ -32,7 +32,7 @@ const userSchema = new Schema({
 
     role: {
         type: String,
-        default: "BASIC"
+        default: "BASIC" // Or ADMIN
     }
 })
 

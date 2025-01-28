@@ -1,6 +1,7 @@
 import express from 'express'
 import authRouter from './authRoutes.js' 
 import userRouter from './userRoutes.js'
+import spaceRouter from './spaceRoutes.js'
 
 const router = express.Router()
 
@@ -10,8 +11,8 @@ router.get('/', (req, res, next)=>{
 
 
 router.use('/auth', authRouter)
-router.use('/user', userRouter)
-
+router.use('/users', userRouter)
+router.use('/spaces', spaceRouter)
 
 
 export default router

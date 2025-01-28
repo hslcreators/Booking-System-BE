@@ -7,7 +7,8 @@ const spaceSchema = new Schema({
         required: true
     },
     location:{
-
+        type: String,
+        required: true
     },
     capacity:{
         type: Number,

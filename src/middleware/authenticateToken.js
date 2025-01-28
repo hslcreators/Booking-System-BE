@@ -1,7 +1,7 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
-export function authUserwebtoken(req, res, next) {
+export function authenticateUserwebtoken(req, res, next) {
     const authheader = req.header['authorization']
     const token = authheader && authheader.split(' ')[1]
     if(!token) return res.sendStatus(401)
@@ -10,4 +10,9 @@ export function authUserwebtoken(req, res, next) {
     req.user = user
     next()
     })
+}
+
+export function isAdmin( req, res, next ) {
+    if (req.user.role != "ADMIN") return res.sendStatus(403)
+        next()
 }
