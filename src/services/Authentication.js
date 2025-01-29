@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import AuthRepo from "../repositories/AuthRepo.js";
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcrypt'
+dotenv.config()
 class AuthenticationService extends AuthRepo {
     // service layer
     async registerUser(data){

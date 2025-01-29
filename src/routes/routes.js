@@ -4,6 +4,7 @@ import userRouter from './userRoutes.js'
 import spaceRouter from './spaceRoutes.js'
 
 const router = express.Router()
+router.use(express.json())
 
 router.get('/', (req, res, next)=>{
     return res.status(200).json({ message: "welcome to booking systems backend.... :)"})

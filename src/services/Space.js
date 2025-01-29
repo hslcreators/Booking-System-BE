@@ -1,4 +1,3 @@
-require('dotenv').config()
 import SpaceRepo from '../repositories/SpaceRepo.js'
 
 class SpaceService extends SpaceRepo {
