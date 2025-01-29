@@ -1,46 +1,64 @@
 import { Space } from "../models/space";
 
 class SpaceRepo {
-    //Database activities
-    async createSpace(data){
-        //error handling needed
-        const space = new Space({
-            name: data.name,
-            location: data.location,
-            capacity: data.capacity,
-            description: data.description
-        })
-        space.save();
-        return space
+    // Create a new space
+    async createSpace(data) {
+        try {
+            const space = new Space(data);
+            await space.save();
+            return space;
+        } catch (error) {
+            throw new Error(`Error creating space: ${error.message}`);
+        }
     }
 
-    async getSpace(data){
-        let space = Space.findOne({data})
-        return space
+    async getSpace(query) {
+        try {
+            const space = await Space.findOne(query);
+            if (!space) {
+                throw new Error("Space not found");
+            }
+            return space;
+        } catch (error) {
+            throw new Error(`Error fetching space: ${error.message}`);
+        }
     }
 
-    async getallSpaces(itemsperPage, pageNo){
-        let spaces;
-        Space.find({}, (err, spaceList) => {
-            if(err) throw new Error("Error Finding Space")
-            if(spaceList) spaces = spaceList
-        }).skip((pageNo - 1) * itemsperPage).limit(itemsperPage)
-        return spaces
+    async getallSpaces(itemsPerPage, pageNo) {
+        try {
+            const skip = (pageNo - 1) * itemsPerPage;
+            const spaces = await Space.find({})
+                .skip(skip)
+                .limit(itemsPerPage)
+                .exec();
+            return spaces;
+        } catch (error) {
+            throw new Error(`Error fetching spaces: ${error.message}`);
+        }
     }
 
-    // async fetchSpace(data){
-    //     let spaces;
-    //     Space.find({data}, (err, spaceList) => {
-    //         if(err) throw new Error("Error Finding Space")
-    //         if(spaceList) spaces = spaceList
-    //     })
-    //     return spaces
-    // }
-
-    async deleteSpace(id){
-        Space.findByIdAndDelete(id);
+    async  querySpaceBy(data) {
+        try {
+            let spaces = await Space.find(data)
+            if (!spaces) throw new Error("No Space Matching Query")
+            return spaces
+        } catch (error) {
+            throw new Error(`Error fetching spaces: ${error.message}`);
+        }
     }
 
+    // Delete a space by ID
+    async deleteSpace(id) {
+        try {
+            const deletedSpace = await Space.findByIdAndDelete(id);
+            if (!deletedSpace) {
+                throw new Error("Space not found");
+            }
+            return deletedSpace;
+        } catch (error) {
+            throw new Error(`Error deleting space: ${error.message}`);
+        }
+    }
 }
 
-export default SpaceRepo
+export default SpaceRepo;

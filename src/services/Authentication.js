@@ -5,20 +5,27 @@ import bcrypt from 'bcrypt'
 class AuthenticationService extends AuthRepo {
     // service layer
     async registerUser(data){
-        const user = await this.createUser(data);
-        if(!user || user.err){
-            //fix error handling
-            throw new Error('Error Creating Users')
+        try {
+            const user = await this.createUser(data);
+            if(!user) throw new Error('Error Creating Users')
+            return {success: true, msg: "User Created Succesfully"}
+        } catch (error) {
+            console.error("Error creating user:", error.message);
+            throw new Error(error.message || "Error creating user");
         }
-        return true //shoud redirect to login after creating
     }
 
     async loginUser(email, password){
-        const user = await this.findUserByEmail(email);
-        if (!user || !this.IsPassword(password, user.password)){
-            throw new Error("Invalid Credentials")
+        try {
+            const user = await this.findUserByEmail(email);
+            if (!user || !this.IsPassword(password, user.password)){
+                throw new Error("Invalid Credentials")
+            }
+            return this.generateToken(user)   
+        } catch (error) {
+            console.error("Error creating user:", error.message);
+            throw new Error(error.message || "Error creating user");
         }
-        return this.generateToken(user)
     }
 
     IsPassword(inputPassword, userPassword){
@@ -28,34 +35,17 @@ class AuthenticationService extends AuthRepo {
         });
     }
 
+    isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
     generateToken(user) {
         return jwt.sign(
             { id: user.id, email: user.email, role: user.role },
             process.env.SECRET_KEY,
             { expiresIn: '1h' }
         );
-    }
-
-    async userSignup(userData){
-       try {
-        
-        const { firstName, lastName, password, email, phoneNumber} = userData
-
-        // check the database if the user already exist 
-        const userExist = await this.findUserByEmail(email) // implement the findUserByEmail logic in the parent Class
-        if(userExist) {} // throw error
-        
-        // else hash the password and save the new user to the database 
-        const hashedPassword = bcrypt.hash(password, 12);
-        const saveUser = await this.registerUser(userData) // implement the registerUser logic in the parent class
-        // return the new user object to the controller.
-
-        return saveUser;
-
-       } catch (error) {
-        throw error
-       }
-        
     }
     
 }
