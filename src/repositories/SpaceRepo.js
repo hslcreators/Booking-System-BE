@@ -1,4 +1,4 @@
-import { Space } from "../models/space";
+import { Space } from "../models/space.js";
 
 class SpaceRepo {
     // Create a new space

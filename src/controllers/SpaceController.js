@@ -1,4 +1,4 @@
-import SpaceService from "../services/Space";
+import SpaceService from "../services/Space.js";
 
 const spaceService = new SpaceService();
 
