@@ -1,4 +1,4 @@
-import BookingsRepo from "../repositories/BookingsRepo";
+import BookingsRepo from "../repositories/BookingsRepo.js";
 
 class BookingService extends BookingsRepo{
 
