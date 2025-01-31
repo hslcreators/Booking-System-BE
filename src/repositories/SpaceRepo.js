@@ -51,9 +51,7 @@ class SpaceRepo {
     async deleteSpace(id) {
         try {
             const deletedSpace = await Space.findByIdAndDelete(id);
-            if (!deletedSpace) {
-                throw new Error("Space not found");
-            }
+            if (!deletedSpace) throw new Error("Space not found");
             return deletedSpace;
         } catch (error) {
             throw new Error(`Error deleting space: ${error.message}`);
